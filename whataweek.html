@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>What a day, huh?</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+    <script src="/captionElement.js"></script>
+  </head>
+
+  <body>
+    <div style="height: 100%; width: 100%">
+      <caption-image
+        id="what-a-week"
+        image="/tintin-bg.png"
+        style="height: 90%; width: 100%"
+      ></caption-image>
+      <a href="/">Home</a>
+      <a href="/whataweek.html">dynamic</a>
+      <a href="/whataweek.html#day">day</a>
+      <a href="/whataweek.html#week">week</a>
+      <a href="/whataweek.html#month">month</a>
+      <a href="/whataweek.html#year">year</a>
+    </div>
+    <script>
+      function getDateEnding(date) {
+        if (date > 3 && date < 21) return "th";
+        switch (date % 10) {
+          case 1:
+            return "st";
+          case 2:
+            return "nd";
+          case 3:
+            return "rd";
+          default:
+            return "th";
+        }
+      }
+      const whatAWeekEl = document.getElementById("what-a-week");
+      function update() {
+        let mode = new URL(location).hash.slice(1);
+        if (!new Set(["year", "month", "week", "day"]).has(mode)) {
+          const targetRatio = 0.6;
+          const currentTime = new Date();
+          const progressRatios = [
+            ["week", currentTime.getDay() / 5],
+            ["day", currentTime.getHours() / 20],
+            ["month", currentTime.getDate() / 30],
+            ["year", (currentTime.getMonth() + 1) / 12],
+          ].filter((e) => e[1] <= targetRatio);
+
+          mode = progressRatios.length > 0 ? progressRatios[0][0] : "week";
+        }
+
+        const waw = `What a ${mode}, huh?|515|156`;
+        let time = "";
+        switch (mode) {
+          case "year":
+            time = new Date().toLocaleString("en-us", { month: "long" });
+            break;
+          case "month":
+            const date = new Date().getDate();
+            time = `the ${date}${getDateEnding(date)}`;
+            break;
+          case "week":
+            time = new Date().toLocaleString("en-us", { weekday: "long" });
+            break;
+          case "day":
+            time = new Date().toLocaleString("en-us", {
+              hour: "numeric",
+              minute: "numeric",
+            });
+            break;
+        }
+        const itsonly = `Captain, it's ${time}|386|305`;
+        whatAWeekEl.setAttribute("caption", `${waw}||${itsonly}`);
+
+        setTimeout(update, 1000);
+      }
+      update();
+    </script>
+  </body>
+</html>

@@ -30,6 +30,7 @@ async function loadFont(fontName, fontURL) {
 class CaptionImage extends HTMLElement {
   static observedAttributes = ["image", "caption"];
   static template = `<style>
+      :host { display: block; }
       html,
       body {
         margin: 0;
@@ -52,7 +53,7 @@ class CaptionImage extends HTMLElement {
       }
       .fade-in {
         opacity: 0;
-        transition: opacity 0.5s ease-in;
+        transition: opacity 0.1s ease-in;
       }
       .fade-in.done {
         opacity: 1
@@ -68,7 +69,6 @@ class CaptionImage extends HTMLElement {
   }
 
   async update() {
-    this.memeImgElement.classList.remove("done");
     if (this.bgImgElement.src !== new URL(this.imageURL, location).href) {
       this.bgImgElement.src = this.imageURL;
     }
