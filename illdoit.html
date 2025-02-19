@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>What a week, huh?</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+    <script src="/captionElement.js"></script>
+  </head>
+
+  <body>
+    <div style="height: 100%; width: 100%">
+      <caption-image
+        id="ill-do-it"
+        image="/illdoit.png"
+        style="height: 90%; width: 100%"
+      ></caption-image>
+      <a href="/index.html">Home</a>
+    </div>
+    <script>
+      const IllDoIt = document.getElementById("ill-do-it");
+      function update() {
+        const day = new Date().toLocaleString("en-us", { weekday: "long" });
+        const me = `Me: It's fine I'll just do all my work on ${day}|511|67`;
+        const meon = `Me on ${day}:|510|199`;
+        IllDoIt.setAttribute("caption", `${me}||${meon}`);
+
+        setTimeout(update, 1000);
+      }
+      update();
+    </script>
+  </body>
+</html>

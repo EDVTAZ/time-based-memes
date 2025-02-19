@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>What a week, huh?</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+    <script src="/captionElement.js"></script>
+  </head>
+
+  <body>
+    <div style="height: 100%; width: 100%">
+      <caption-image
+        id="me-setting-my-alarm"
+        image="/alarm.jpg"
+        style="height: 90%; width: 100%"
+      ></caption-image>
+      <a href="/index.html">Home</a>
+    </div>
+    <script>
+      const meSettingMyAlarm = document.getElementById("me-setting-my-alarm");
+      function update() {
+        const now = new Date();
+        const currentTime = now.toLocaleString("en-us", {
+          hour: "numeric",
+          minute: "numeric",
+        });
+        now.setHours(now.getHours() + 3, 0);
+        const alarmTime = now.toLocaleString("en-us", {
+          hour: "numeric",
+          minute: "numeric",
+        });
+        const text = `Me at ${currentTime} setting my alarm for ${alarmTime}|953|134`;
+        meSettingMyAlarm.setAttribute("caption", text);
+
+        setTimeout(update, 1000);
+      }
+      update();
+    </script>
+  </body>
+</html>
